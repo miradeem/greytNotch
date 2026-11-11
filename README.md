@@ -1,5 +1,8 @@
 # 🏝️ GreytNotch: Dynamic Island greytHR Attendance Tracker
 
+<img width="2304" height="1728" alt="Media (3)" src="https://github.com/user-attachments/assets/b501b534-e6fc-4500-a535-5f85b80af3e0" />
+
+
 A lightweight, native macOS Dynamic Island widget that tracks your office attendance and 8-hour workday directly from your MacBook's notch.
 
 When you swipe in at your office turnstile biometric reader, GreytNotch automatically captures your first swipe via the **greytHR** portal and starts an 8-hour countdown timer with fluid, Apple-grade notch animations.
@@ -9,7 +12,7 @@ When you swipe in at your office turnstile biometric reader, GreytNotch automati
 ## ⚡ Quick Start
 
 ### 📋 Prerequisites
-- **macOS Monterey (12.0) or later** (Optimized for MacBooks with a camera notch, e.g. M1/M2/M3/M4 MacBook Pro & Air).
+- **macOS Monterey (12.0) or later** (Optimized for MacBooks with a camera notch, e.g. M1/M2/M3/M4/M5 MacBook Pro & Air).
 - **Xcode Command Line Tools** (for the Swift compiler):
   ```bash
   xcode-select --install
