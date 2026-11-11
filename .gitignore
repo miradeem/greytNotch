@@ -1,0 +1,37 @@
+# macOS System Files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Compiled App Bundle & Binaries
+GreytNotch.app/
+*.o
+*.out
+*.dylib
+*.dSYM/
+.build/
+
+# Python Cache & Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Local greytHR runtime & credentials
+.greythr_config.json
+.greythr_status.json
+.greythr_pubkey.pem
+*.log
+
+# IDE & Editor metadata
+.vscode/
+.idea/
+*.swp
+*~
