@@ -4,6 +4,13 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "$DIR"
 
+# Ensure Swift compiler is available
+if ! command -v swiftc &> /dev/null; then
+    echo "[!] swiftc compiler not found. Please install Xcode Command Line Tools:"
+    echo "    xcode-select --install"
+    exit 1
+fi
+
 echo "[*] Compiling GreytNotch native macOS app..."
 mkdir -p GreytNotch.app/Contents/MacOS
 mkdir -p GreytNotch.app/Contents/Resources

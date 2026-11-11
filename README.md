@@ -1,102 +1,129 @@
 # 🏝️ GreytNotch: Dynamic Island greytHR Attendance Tracker
 
-A native macOS Dynamic Island attendance widget for MacBook notches that automatically tracks your office work hours from **greytHR**. When you swipe in at the turnstile biometric reader, it captures your first swipe of the day and starts an 8-hour countdown timer, seamlessly accessible right from your MacBook's notch.
+A lightweight, native macOS Dynamic Island widget that tracks your office attendance and 8-hour workday directly from your MacBook's notch.
+
+When you swipe in at your office turnstile biometric reader, GreytNotch automatically captures your first swipe via the **greytHR** portal and starts an 8-hour countdown timer with fluid, Apple-grade notch animations.
 
 ---
 
-## ✨ Features
+## ⚡ Quick Start
 
-- **MacBook Notch Dynamic Island:**
-  - **Hardware Aligned:** Sits flush directly under your MacBook's camera notch with zero top margin dead zones.
-  - **Hover Trigger:** Springs smoothly downward into an Apple-style acrylic glass island when hovering over the notch.
-  - **5 Native Animation Engines:**
-    - 🧞‍♂️ **Genie:** Authentic Apple window minimization funnel suction directly into the camera cutout.
-    - 🧊 **3D Visor:** Spatial perspective flip into 3D depth.
-    - 🎾 **Bouncy:** Playful spring overshoot bounce.
-    - 💧 **Liquid:** Fluid Dynamic Island morph stretch.
-    - ⬇️ **Shutter:** Snappy, rapid vertical slide.
-  - **Interactive Animation Switcher:** Switch animations on the fly via the 🪄 wand button in the header; preferences persist automatically.
-
-- **Biometric Turnstile Sync:**
-  - Polls your company's greytHR portal in the morning until the door biometric reader registers your first swipe.
-  - Automatically records the exact timestamp (`First In`) and calculates your target checkout time (`First In + 8 hours`).
-  - Native OpenSSL RSA-OAEP SHA-256 password encryption and OAuth2 PKCE turnstile sync.
-
-- **Live Metrics & Visuals:**
-  - 🕒 **First In Time**
-  - 🏁 **Earliest Safe Exit Time (8 Hours)**
-  - ⏳ **Elapsed Time & Remaining Countdown**
-  - 📊 **Animated Gradient Glowing Progress Bar**
-  - 🏷️ **macOS Dock-Style Tooltips:** Hovering over any action icon displays an elevated obsidian pill with specular sheen.
-
-- **Native Notifications:**
-  - ⏱ Reminder alert at **15 minutes left**.
-  - 🎉 Completion alert when **8 hours are reached**.
-
-- **Quick Controls:**
-  - 📌 **Pin Window:** Keep the island pinned open while multitasking.
-  - 🔄 **Live Sync:** Refresh turnstile swipes on demand.
-  - ✏️ **Manual Time Override:** Manually set your swipe time if turnstile sync is delayed.
-  - ⏻ **Quick Quit:** Instant clean exit from the island header.
+### 📋 Prerequisites
+- **macOS Monterey (12.0) or later** (Optimized for MacBooks with a camera notch, e.g. M1/M2/M3/M4 MacBook Pro & Air).
+- **Xcode Command Line Tools** (for the Swift compiler):
+  ```bash
+  xcode-select --install
+  ```
+- **Zero Third-Party Dependencies:** Uses standard macOS system frameworks (`SwiftUI`, `AppKit`, `UserNotifications`) and Python built-in standard library (`urllib`, `json`, `openssl`). No `pip install` or external package managers needed.
 
 ---
 
-## 🚀 Getting Started
+### 🚀 Setup in 3 Steps
 
-### 1. Clone & Launch
+#### 1. Clone the Repository
 ```bash
 git clone https://github.com/miradeem/greytNotch.git
 cd greytNotch
-./start.sh
 ```
-*Move your cursor to the top center of your screen / camera notch to watch the Dynamic Island expand!*
 
-### 2. Connect Your greytHR Account
-Run the interactive configuration wizard:
+#### 2. Configure Your greytHR Account
+Run the interactive setup wizard:
 ```bash
 ./configure.sh
 ```
 You will be prompted for:
-1. **greytHR Domain:** e.g., if your office URL is `https://acme.greythr.com`, enter `acme`.
-2. **Username:** Your Employee ID.
-3. **Password:** Your greytHR password.
+1. **greytHR Domain:** e.g., if your office portal URL is `https://acme.greythr.com`, enter `acme`.
+2. **Employee ID:** Your office username.
+3. **Password:** Your greytHR login password.
 
-Credentials are saved locally in your user home directory at `~/.greythr_config.json` with strict `0600` permissions.
+> **Security Note:** Credentials are encrypted using OpenSSL RSA-OAEP SHA-256 and stored strictly on your local machine at `~/.greythr_config.json` with strict `0600` (read/write owner only) permissions.
 
-### 3. Stop the App & Daemon
+#### 3. Launch GreytNotch
+```bash
+./start.sh
+```
+*That's it!* 
+- `./start.sh` will **automatically compile** the Swift app on your first run.
+- The Dynamic Island will activate at the top of your screen.
+- The background sync daemon will begin checking for your first turnstile swipe.
+
+---
+
+## 🎮 How to Use & Controls
+
+Move your mouse cursor to the top center of your screen over your MacBook's camera notch to see the Dynamic Island expand.
+
+| Button | Name | Action |
+| :---: | :--- | :--- |
+| 🪄 | **Animation Style** | Open the live switcher to choose between 5 native animation engines (Genie, Visor, Bouncy, Liquid, Shutter). |
+| ✏️ | **Manual Swipe Time** | Set or override your first swipe time manually (e.g. `09:15 AM`) if turnstile sync is delayed. |
+| 🔄 | **Refresh Attendance** | Manually trigger an immediate greytHR turnstile sync. |
+| 📌 | **Pin Window** | Keep the Dynamic Island pinned open while multitasking. |
+| ⏻ | **Quit** | Close the Dynamic Island and stop all processes immediately. |
+
+---
+
+## 🧪 Try It Without greytHR (Demo Mode)
+
+Want to test the Dynamic Island animations and countdown timer without connecting a greytHR account?
+
+1. Launch the app:
+   ```bash
+   ./start.sh
+   ```
+2. Feed a simulated morning swipe time:
+   ```bash
+   ./greyt_sync.py --manual-in "09:30 AM"
+   ```
+   *(Or simply hover over the notch, click the ✏️ pencil icon in the header, and type any time!)*
+
+The island will immediately update with `09:30 AM` as your first swipe and calculate `05:30 PM` as your 8-hour target.
+
+---
+
+## 🛑 Stopping the App
+
+To stop both the Dynamic Island widget and the background polling daemon:
 ```bash
 ./stop.sh
 ```
-*(You can also click the **⏻** power button in the top right of the expanded island).*
+*(You can also simply click the **⏻** power button in the top right of the expanded Dynamic Island).*
 
 ---
 
-## 🛠️ Testing Without greytHR (Manual Test Mode)
+## ✨ Features Breakdown
 
-To test the island animation and timer immediately without connecting greytHR:
-```bash
-./greyt_sync.py --manual-in "09:30 AM"
-```
-The island will immediately update with `09:30 AM` as your first swipe and calculate `05:30 PM` as your 8-hour target.
+- **Authentic Apple Notch Integration:**
+  - **Flush Hardware Cutout:** Aligned directly under the physical MacBook camera notch with zero top margin dead zones.
+  - **No Menu Bar Clutter:** Runs as a pure Dynamic Island accessory widget without taking up space in your macOS menu bar.
+  - **5 Animation Engines:**
+    - 🧞‍♂️ **Genie:** Authentic Apple window minimization funnel suction into the camera cutout.
+    - 🧊 **3D Visor:** Spatial perspective flip into 3D depth.
+    - 🎾 **Bouncy:** Playful spring overshoot bounce.
+    - 💧 **Liquid:** Fluid Dynamic Island morph stretch.
+    - ⬇️ **Shutter:** Snappy, rapid vertical slide.
+  - **macOS Dock-Style Tooltips:** Elevated obsidian black pills with specular edge sheens and drop shadows when hovering over action icons.
 
-You can also click the ✏️ **pencil** icon in the header to set your swipe time directly within the UI.
+- **Automated Turnstile Sync:**
+  - Modern greytHR UAS authentication using OpenSSL RSA-OAEP SHA-256 password encryption and OAuth2 PKCE.
+  - Polls `/v3/api/attendance/swipes` in the morning until the turnstile registers your first swipe, then automatically sleeps in low-frequency mode to preserve battery and network bandwidth.
+
+- **Native System Alerts:**
+  - ⏱ Reminder notification at **15 minutes remaining**.
+  - 🎉 Completion alert when your **8 hours are reached**.
 
 ---
 
-## ⚙️ Background Polling Daemon
+## 🧑‍💻 For Developers & Contributing
 
-To run the poller continuously in the background (polls every 5 minutes until today's swipe is found, then switches to low-frequency sleep):
+You **never** need to run `build.sh` manually to use the app, because `./start.sh` automatically compiles the binary whenever it is missing.
+
+However, if you are contributing or modifying the Swift code inside `src/`:
+
 ```bash
-python3 greyt_sync.py --daemon
-```
-*Note: `./start.sh` automatically starts this daemon in the background if credentials exist.*
-
----
-
-## 🏗️ Rebuilding the App
-
-The app is 100% native Swift and SwiftUI with zero third-party dependencies:
-```bash
+# Recompile the native Swift binary without launching
 ./build.sh
 ```
-Binary output: `GreytNotch.app` (under 500 KB, ~20 MB RAM footprint).
+
+- **Output:** `GreytNotch.app` bundle (< 500 KB binary, ~20 MB RAM footprint).
+- **Architecture:** 100% native Swift 5 + SwiftUI and AppKit. Zero third-party dependencies.
